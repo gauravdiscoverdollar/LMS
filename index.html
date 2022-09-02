@@ -16,15 +16,47 @@
 </style>
 <body>
     <h1>Library Management System using JS Console</h1>
-    <h4>Testing AddBooks Data</h4>
-    <ul>
-        <li>this.addBook("Managing Oneself","Peter Drucker",250,112,"Managing Oneself is a well written, inspiring book on the need to control and direct lives in order to gain and retain a foothold in the ever-changing global work culture.","Self-help")</li>
-        <li>this.addBook("The Miracle Morning","Hal Elrod",175,102,"What's being widely regarded as "one of the most life changing books ever written" may be the simplest approach to achieving everything you've ever wanted, and faster than you ever thought possible","Self-help")</li>
-        <li>this.addBook("Rich Dad Poor Dad","Robert Kiyosaki",195,119," It advocates the importance of financial literacy, financial independence and building wealth through investing in assets, real estate investing, starting and owning businesses, as well as increasing one's financial intelligence","Personal-finance")</li>
-        <li>this.addBook("The Power of Habit","Charles Duhigg",359,116,"It explores the science behind habit creation and reformation. The book reached the best seller list for The New York Times, Amazon.com, and USA Today.","Self-help")</li>
-        <li>this.addBook("Start with Why","Simon Sinek",290,105,"Start with Why: How Great Leaders Inspire Everyone to Take Action is a book by Simon Sinek.","Business")</li>
-        <li>this.addBook("The Psychology of Money","Morgan Housel",172,117,"Doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.","Personal-finance")</li>
-    </ul>
+    <h3>Task Performed:</h3>
+    <ol>
+        <li>Add a new book to existing list of books.
+            <div><b>Testing AddBooks Data</b></div>
+            <ul>
+                <li>addBook("Managing Oneself","Peter Drucker",250,112,"Originally published: 7 January 2008","Self-help")</li>
+                <li>addBook("The Miracle Morning","Hal Elrod",175,102,"Originally published: 7 December 2012","Self-help")</li>
+                <li>addBook("Rich Dad Poor Dad","Robert Kiyosaki",195,119,"Originally published: 1997","Personal-finance")</li>
+                <li>addBook("The Power of Habit","Charles Duhigg",359,116,"Originally published: 28 February 2012","Self-help")</li>
+                <li>addBook("Start with Why","Simon Sinek",290,105,"Originally published: 2009","Business")</li>
+                <li>addBook("The Psychology of Money","Morgan Housel",172,117,"Originally published: 8 September 2020","Personal-finance")</li>
+                <li>addBook("How to Stop Worrying and Start Living","Dale Carnegie",149,107,"Originally published: 1948","Self-help")</li>
+            </ul>
+        </li> <br>
+
+        <li>
+            Edit the details of a particular book.
+            <div><b>Testing Edit Book Data</b></div>
+            <ul>
+                <li>editBook(107,{"book_name": "How To Stop Worrying","genre":"Buisness"})</li>
+                <li>editBook(119,{"price":500,"book_author":"Robert"})</li>
+                <li>editBook(112,{"genre": "Personal-finance"})</li>
+            </ul>
+        </li><br>
+        <li>
+            List all the books that are available in the system. ---> <b>listBooks()</b>
+        </li>
+        <li>
+            Search for a book. --->  <b>searchBook(book_id)</b>
+        </li>
+        <li>
+            Delete a Particular book.  ---> <b>deleteBook(book_id)</b>
+        </li>
+        <li>
+            List all the books that are deleted. ---> <b>deletedListBook()</b>
+        </li>
+        <li>
+            Query the books. ---> <b>query()</b> "It will provide two predetermined queries"
+        </li>
+    </ol>
+   
     <script src="./LMS.js"></script>
 </body>
 </html>

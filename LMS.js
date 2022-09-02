@@ -85,13 +85,12 @@ function deletedListBook(){
 // function to search book with the book_id
 function searchBook(book_id){
     // finding book
-    let book = books.map((val,id)=>{
+    let book = books.filter((val,id)=>{
         if(val.book_id === book_id){
             return val;
         }
     })
 
-    
     // checking if book found or not
     if(book[0]===undefined){                        //if not found
         console.warn(`Book with book_id: ${book_id} not found`);
@@ -145,8 +144,7 @@ function query(){
         })
         console.log('List of Top 5 Most Expensive Books',sortName(top5));
     
-    }else if(q==2){
-        
+    }else if(q==2){  
         const genreCount = books.reduce((acc,curr)=>{
            if(acc[curr.genre] !== undefined){
             acc[curr.genre] = ++acc[curr.genre]
@@ -177,3 +175,6 @@ function sortPrice(arr){
     return arr.sort((a, b) => a.price - b.price)
 }
 
+
+
+// Task to Perform 1. Trim Genre
