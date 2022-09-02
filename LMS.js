@@ -91,6 +91,7 @@ function searchBook(book_id){
         }
     })
 
+    
     // checking if book found or not
     if(book[0]===undefined){                        //if not found
         console.warn(`Book with book_id: ${book_id} not found`);
@@ -142,10 +143,19 @@ function query(){
                 }
             }
         })
-        console.log('List of Top 5 Most Expensive Books',top5);
+        console.log('List of Top 5 Most Expensive Books',sortName(top5));
     
     }else if(q==2){
-        console.log('Genre');
+        
+        const genreCount = books.reduce((acc,curr)=>{
+           if(acc[curr.genre] !== undefined){
+            acc[curr.genre] = ++acc[curr.genre]
+           }else{
+            acc[curr.genre] = 1;
+           }
+           return acc;
+        },{})
+        console.log("Number of books in each Genre:",genreCount);
     }else{
         if(q!=0){
             console.warn('Please Enter Appropriate Option');
