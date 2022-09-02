@@ -73,6 +73,7 @@ function editBook(book_id,newData){
 
 // function to display current booklist
 function listBooks(){
+    sortName(books);
     console.log("Booklist:\n",books)
 }
 
@@ -123,4 +124,46 @@ function deleteBook(book_id){
 }
 
 
+
+// function to query books
+function query(){
+    let q = prompt("Predetermined Queries:\n1. Get the top 5 most expensive books that are present in the library.\n2. Number of books in each Genre.\nEnter Option 1 or 2 or 0 for Exit");
+    if(q==1){
+        let top5 = [];
+        let i = 0;
+        books.map((val,id)=>{
+            if(i<5){
+                top5.push(val);
+                i++;   
+            }else{
+                sortPrice(top5);
+                if(val.price > top5[0].price){
+                    top5[0] = val;
+                }
+            }
+        })
+        console.log('List of Top 5 Most Expensive Books',top5);
+    
+    }else if(q==2){
+        console.log('Genre');
+    }else{
+        if(q!=0){
+            console.warn('Please Enter Appropriate Option');
+            query();
+        }else{
+            console.warn(`You Close the Query!`)
+        }
+    }
+}
+
+
+// function to sort array according to name in ascending order
+function sortName(arr){
+    return arr.sort((a, b) => a.book_name.localeCompare(b.book_name))
+}
+
+// function to sort array according to price in ascending order
+function sortPrice(arr){
+    return arr.sort((a, b) => a.price - b.price)
+}
 
