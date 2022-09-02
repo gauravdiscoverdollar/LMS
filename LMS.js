@@ -73,12 +73,12 @@ function editBook(book_id,newData){
 
 // function to display current booklist
 function listBooks(){
-    console.log(books)
+    console.log("Booklist:\n",books)
 }
 
 // function to display deleted booklist
 function deletedListBook(){
-    console.log(deletedBooks);
+    console.log("Deleted Booklist:\n",deleted_books);
 }
 
 // function to search book with the book_id
@@ -92,10 +92,34 @@ function searchBook(book_id){
 
     // checking if book found or not
     if(book[0]===undefined){                        //if not found
-        console.warn(`Book with book_id: ${book_id} not Found`);
+        console.warn(`Book with book_id: ${book_id} not found`);
     }else{                                          //if found
         console.log(`Book Found --> see Details\n `,book[0])
     }
+}
+
+
+// function to delete a particular book
+function deleteBook(book_id){
+    // getting index of book_id if available
+    let index;
+    books.map((val,id)=>{
+        if(val.book_id === book_id){
+            index = id;
+        }
+    });
+
+    if(index !== undefined){
+        deleted_books.push(books[index]);
+        books = books.filter((val,id)=>{
+            return id !== index;
+        })
+
+        console.log("Book Deleted Successfully");
+    }else{
+        console.warn(`Book with book_id: ${book_id} for deleting not found`);
+    }
+  
 }
 
 
