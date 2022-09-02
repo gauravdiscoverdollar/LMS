@@ -76,5 +76,27 @@ function listBooks(){
     console.log(books)
 }
 
+// function to display deleted booklist
+function deletedListBook(){
+    console.log(deletedBooks);
+}
+
+// function to search book with the book_id
+function searchBook(book_id){
+    // finding book
+    let book = books.map((val,id)=>{
+        if(val.book_id === book_id){
+            return val;
+        }
+    })
+
+    // checking if book found or not
+    if(book[0]===undefined){                        //if not found
+        console.warn(`Book with book_id: ${book_id} not Found`);
+    }else{                                          //if found
+        console.log(`Book Found --> see Details\n `,book[0])
+    }
+}
+
 
 
