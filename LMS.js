@@ -209,4 +209,56 @@ function sortPrice(arr){
 
 
 
-// Task to Perform 1. Trim Genre
+//Start --> Working With HTML UI
+
+//Start --> function to handle with opening adding booklist
+async function openAddBook(){
+    let form = ` <h2>Add New Book</h2>
+    <form id="addBookForm">
+        <div>
+            <label>Book ID : </label>
+            <input type="number" name="book_id" id="add_book_id" />
+        </div>
+        <div>
+            <label>Book Name : </label>
+            <input type="text" name="book_name" id="add_book_name" />
+        </div>
+        <div>
+            <label>Book Author : </label>
+            <input type="text" name="book_author" id="add_book_author" />
+        </div>
+        <div>
+            <label>Book Price : </label>
+            <input type="number" name="book_price" id="add_book_price" />
+        </div>
+        <div>
+            <label>Book Description: </label>
+            <textarea name="book_desc" id="add_book_desc" required></textarea>
+        </div>
+        <div>
+            <label>Genre</label>
+            <select name="book_genre" id="add_book_genre">
+                <option value="Self-help">Self-help</option>
+                <option value="Personal-finance">Personal-finance</option>
+                <option value="Business">Business</option>
+            </select>
+        </div>
+        <div>
+            <label></label>
+            <button>ADD Book</button>
+        </div>  
+    </form>`;
+    interface.innerHTML = form;
+
+    // adding event listner on adding new book
+    document.getElementById("addBookForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        addBook(event.target[1].value,event.target[2].value,event.target[3].value,event.target[0].value,event.target[4].value,event.target[5].value)
+        interface.innerHTML = '<h4>Book Added Successfully</h4>';
+        setTimeout(()=>{
+            interface.innerHTML = '';
+        },1500)
+    });
+}
+//End --> function to handle with opening adding booklist
+ 

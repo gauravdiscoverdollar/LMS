@@ -9,53 +9,45 @@
 <style>
     body{
         background: wheat;
+        text-align: center;
     }
-    h1{
+    form div{
+        margin: 10px;
+        display: flex;
+        width: 50%;
+        justify-content: space-between;
+    }
+    form div input{
+        width: 250px;
+    }
+    form div textarea{
+        width: 250px;
+    }
+    form div select{
+        width: 250px;
+    }
+    table, th, td {
+       border:1px solid black;
+    }
+    table{
+        width: 100%;
         text-align: center;
     }
 </style>
 <body>
-    <h1>Library Management System using JS Console</h1>
-    <h3>Task Performed:</h3>
-    <ol>
-        <li>Add a new book to existing list of books.
-            <div><b>Testing AddBooks Data</b></div>
-            <ul>
-                <li>addBook("Managing Oneself","Peter Drucker",250,112,"Originally published: 7 January 2008","Self-help")</li>
-                <li>addBook("The Miracle Morning","Hal Elrod",175,102,"Originally published: 7 December 2012","Self-help")</li>
-                <li>addBook("Rich Dad Poor Dad","Robert Kiyosaki",195,119,"Originally published: 1997","Personal-finance")</li>
-                <li>addBook("The Power of Habit","Charles Duhigg",359,116,"Originally published: 28 February 2012","Self-help")</li>
-                <li>addBook("Start with Why","Simon Sinek",290,105,"Originally published: 2009","Business")</li>
-                <li>addBook("The Psychology of Money","Morgan Housel",172,117,"Originally published: 8 September 2020","Personal-finance")</li>
-                <li>addBook("How to Stop Worrying and Start Living","Dale Carnegie",149,107,"Originally published: 1948","Self-help")</li>
-            </ul>
-        </li> <br>
+    <h1>Library Management System </h1>
+    <div>
+        <button onclick="openAddBook()">Add Book</button>
+        <button>Edit Book</button>
+        <button>Delete Book</button>
+        <button>Book Querry</button>
+        <button onclick="handleShowBookList()">Book List</button>
+        <button onclick="handleShowBookList()">Deleted BookList</button>
+    </div>
+    <div id="interface" style="text-align: left;margin: 0 5%;margin-top: 50px;">
+      
 
-        <li>
-            Edit the details of a particular book.
-            <div><b>Testing Edit Book Data</b></div>
-            <ul>
-                <li>editBook(107,{"book_name": "How To Stop Worrying","genre":"Buisness"})</li>
-                <li>editBook(119,{"price":500,"book_author":"Robert"})</li>
-                <li>editBook(112,{"genre": "Personal-finance"})</li>
-            </ul>
-        </li><br>
-        <li>
-            List all the books that are available in the system. ---> <b>listBooks()</b>
-        </li>
-        <li>
-            Search for a book. --->  <b>searchBook(book_id)</b>
-        </li>
-        <li>
-            Delete a Particular book.  ---> <b>deleteBook(book_id)</b>
-        </li>
-        <li>
-            List all the books that are deleted. ---> <b>deletedListBook()</b>
-        </li>
-        <li>
-            Query the books. ---> <b>query()</b> "It will provide two predetermined queries"
-        </li>
-    </ol>
+    </div>
    
     <script src="./LMS.js"></script>
 </body>
