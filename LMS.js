@@ -394,6 +394,35 @@ function openEditOption(){
 // End --> function to open Edit Option In UI
 
 
+// Start --> function to Handle Search
+function openSearchOption(){
+    const interface = document.getElementById("interface");
+    interface.innerHTML = `<h3>Edit a Book</h3>
+    <form id="getSearchBookIdForm">
+        <label>Enter the ID of Book You Want to Search</label>
+        <input type="text" name="search_book_id" id="search_book_id" required style="margin-left: 50px;">
+        <button type="submit">Search</button>
+    </form>`
+
+     // adding event listner getting edit a bookid
+     document.getElementById("getSearchBookIdForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        let index = getIdOfBookID(parseInt(event.target[0].value));
+        if(index!==undefined){
+            let search = [];
+            search.push(books[index]);
+            hanleShowList(search,"Searched Book");   
+
+        }else{
+            interface.innerHTML = `<h3 style="color:red;">Book With ${parseInt(event.target[0].value)} not Found in Library</h3>`;
+            setTimeout(()=>{
+                interface.innerHTML = '';
+                openSearchOption();
+            },1000)
+        }
+    });
+}
+// End --> function to Handle Search
 
 
 
