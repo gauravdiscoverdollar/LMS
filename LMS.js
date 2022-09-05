@@ -1,7 +1,8 @@
 
 let books = [];                         //books array 
 let deleted_books = [];                 //deleted books array
-
+let form ;
+const interface = document.getElementById("interface");
 
 // Start --> function for addding new book
 function addBook(book_name,book_author,price,book_id,desc,genre){
@@ -209,6 +210,7 @@ function sortPrice(arr){
 
 
 
+
 //Start --> Working With HTML UI
 
 //Start --> function to handle with opening adding booklist
@@ -217,19 +219,19 @@ async function openAddBook(){
     <form id="addBookForm">
         <div>
             <label>Book ID : </label>
-            <input type="number" name="book_id" id="add_book_id" />
+            <input type="number" name="book_id" id="add_book_id" required/>
         </div>
         <div>
             <label>Book Name : </label>
-            <input type="text" name="book_name" id="add_book_name" />
+            <input type="text" name="book_name" id="add_book_name" required/>
         </div>
         <div>
             <label>Book Author : </label>
-            <input type="text" name="book_author" id="add_book_author" />
+            <input type="text" name="book_author" id="add_book_author" required/>
         </div>
         <div>
             <label>Book Price : </label>
-            <input type="number" name="book_price" id="add_book_price" />
+            <input type="number" name="book_price" id="add_book_price" required/>
         </div>
         <div>
             <label>Book Description: </label>
@@ -253,7 +255,7 @@ async function openAddBook(){
     // adding event listner on adding new book
     document.getElementById("addBookForm").addEventListener("submit", function(event){
         event.preventDefault();
-        addBook(event.target[1].value,event.target[2].value,event.target[3].value,event.target[0].value,event.target[4].value,event.target[5].value)
+        addBook(event.target[1].value,event.target[2].value,event.target[3].value,parseInt(event.target[0].value),event.target[4].value,event.target[5].value)
         interface.innerHTML = '<h4>Book Added Successfully</h4>';
         setTimeout(()=>{
             interface.innerHTML = '';
@@ -263,17 +265,19 @@ async function openAddBook(){
 //End --> function to handle with opening adding booklist
  
 
+
 // Start --> function to handle Showing Booklist in UI
 function handleShowBookList(){
     sortName(books);
     hanleShowList(books);   
+    // console.log("Book")
 }
 // End --> function to handle Showing Booklist in UI
 
 
 
 // Start --> function to handle Showing Deleted Booklist in UI
-function handleShowBookList(){
+function handleShowDeletedBookList(){
     sortName(deleted_books);
     hanleShowList(deleted_books);   
 }
@@ -286,8 +290,9 @@ function handleShowBookList(){
 
 
 
-// function to handle show data
+//Start --> function to handle show data
 function hanleShowList(data){
+    // changing ui interface to table
     interface.innerHTML= `<table>
                             <thead>
                                 <tr>
@@ -305,6 +310,7 @@ function hanleShowList(data){
                         </table>`
     let tbody = document.getElementById('tbody');
     if(data.length !== 0){
+        // looping over booklist
         data.map((val,key)=>{
             let tr = ` <tr>
                             <td>${val.book_id}</td>
@@ -314,15 +320,155 @@ function hanleShowList(data){
                             <td>${val.desc}</td>
                             <td>${val.genre}</td>
                         </tr>`;
+        // adding all book in ui
         tbody.innerHTML += tr;
         })
     }else{
+        // in case no book in list
         let tr = ` <tr>
                         <td colspan="6">No Data</td>
                     </tr>`
         tbody.innerHTML = tr;
     }
 }
+//End --> function to handle show data
+
+
+
+
+
+// Start --> function to open Edit Option In UI
+function openEditOption(){
+    interface.innerHTML = `<h3>Edit a Book</h3>
+    <form id="getEditBookIdForm">
+        <label>Enter the ID of Book You Want to Edit</label>
+        <input type="text" name="edit_book_id" id="edit_book_id" required style="margin-left: 50px;">
+        <button type="submit">Edit</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody id="e-tbody">
+        </tbody>
+    </table>`;
+    let tbody = document.getElementById('e-tbody');
+    if(books.length !== 0){
+        // looping over booklist
+        books.map((val,key)=>{
+            let tr = ` <tr>
+                            <td>${val.book_id}</td>
+                            <td>${val.book_name}</td>
+                            <td><button onclick="handleEditButton(${val.book_id})">Edit</button></td>
+                        </tr>`;
+        // adding all book in ui
+        tbody.innerHTML += tr;
+        })
+    }else{
+        // in case no book in list
+        let tr = ` <tr>
+                        <td colspan="3">No Data</td>
+                    </tr>`
+        tbody.innerHTML = tr;
+    }
+
+
+     // adding event listner getting edit a bookid
+     document.getElementById("getEditBookIdForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        handleEditButton(event.target[0].value)
+    });
+
+}
+// End --> function to open Edit Option In UI
+
+
+
+
+
+// Start --> function to show Edit Form and Handle It
+function handleEditButton(book_id){
+    book_id = parseInt(book_id)         //parsing book_id to int
+    
+    let index;
+    books.map((val,id)=>{               //geting index of bookid
+        if(val.book_id === book_id){
+            index = id;
+        }
+    })
+
+    if(index !== undefined){                //if index found
+        let book = books[index];
+        let editForm = ` <h2>Edit Book</h2>
+                            <form id="editFormSubmit">
+                                <div>
+                                    <label>Book ID : </label>
+                                    <input type="number" name="book_id" id="add_book_id" value="${book.book_id}" readonly required/>
+                                </div>
+                                <div>
+                                    <label>Book Name : </label>
+                                    <input type="text" name="book_name" id="add_book_name" value="${book.book_name}" required/>
+                                </div>
+                                <div>
+                                    <label>Book Author : </label>
+                                    <input type="text" name="book_author" id="add_book_author" value="${book.book_author}" required/>
+                                </div>
+                                <div>
+                                    <label>Book Price : </label>
+                                    <input type="number" name="book_price" id="add_book_price" value="${book.price}" required/>
+                                </div>
+                                <div>
+                                    <label>Book Description: </label>
+                                    <textarea name="book_desc" id="add_book_desc" required>${book.desc}</textarea>
+                                </div>
+                                <div>
+                                    <label>Genre</label>
+                                    <select name="book_genre" id="add_book_genre">
+                                        <option value="${book.genre}" selected disabled hidden>${book.genre}</option>
+                                        <option value="Self-help">Self-help</option>
+                                        <option value="Personal-finance">Personal-finance</option>
+                                        <option value="Business">Business</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label></label>
+                                    <button>Edit Book</button>
+                                </div>  
+                            </form>`
+        interface.innerHTML = editForm;             //add dynamic form to UI
+
+
+        // handling edit form on submit
+        document.getElementById("editFormSubmit").addEventListener("submit", function(event){
+            event.preventDefault();
+            let editObj = {
+                book_id : parseInt(event.target[0].value),
+                book_name : event.target[1].value,
+                book_author : event.target[2].value,
+                price : event.target[3].value,
+                desc : event.target[4].value,
+                genre : event.target[5].value
+            }
+            editBook(book_id,editObj);
+            interface.innerHTML = "<h3>Book Edit Successfull</h3>";
+            setTimeout(()=>{
+                interface.innerHTML = '';
+            },1500)
+        });
+
+    }else{                      //if index not found of book_id
+        let showMessage = `<h3 style="color:red;">Book With ${book_id} not Found in Library</h3>`;
+        interface.innerHTML = showMessage;
+        setTimeout(()=>{
+            interface.innerHTML = '';
+        },1500)
+    }
+}
+// End --> function to show Edit Form and Handle It
 
 
 
