@@ -523,10 +523,11 @@ function showDeleteOpts(){
         handleDeleteButton(event.target[0].value)
     });
 }
+// End --> function to Show Deleting Option
 
 
 
-
+// Start --> Function to handle Delete Functionality from UI
 function handleDeleteButton(book_id){
     book_id = parseInt(book_id);
     let index;
@@ -552,3 +553,72 @@ function handleDeleteButton(book_id){
         },1000) 
     }
 }
+// End --> Function to handle Delete Functionality from UI
+
+
+
+// Start --> Function to Show Query In UI
+function showQuery(){
+    let html = ` <div style="text-align:center;">
+                    <button onclick="handleTop5Book()">Top 5 Most Expensive Books</button>
+                    <button onclick="handleNumberOfBookInEachGenre()">Number of books in each Genre</button>
+                </div>`
+    interface.innerHTML = html;
+
+}
+
+// function to handel top5 price books in library
+function handleTop5Book(){
+    let top5 = [];
+    let i = 0;
+
+    // logic for getting top 5 books
+    books.map((val,id)=>{
+        if(i<5){
+            top5.push(val);
+            i++;   
+        }else{
+            sortPrice(top5);
+            if(val.price > top5[0].price){
+                top5[0] = val;
+            }
+        }
+    })
+    // sorting books in ascending order
+    sortName(top5);
+    hanleShowList(top5,`Top 5 Most Expensive Books <button style="float:right;" onclick="handleNumberOfBookInEachGenre()">Number of books in each Genre</button>`);      
+}
+
+// function to handle genre in each 
+function handleNumberOfBookInEachGenre(){
+    const genreCount = books.reduce((acc,curr)=>{
+        if(acc[curr.genre] !== undefined){
+         acc[curr.genre] = ++acc[curr.genre]
+        }else{
+         acc[curr.genre] = 1;
+        }
+        return acc;
+     },{})
+     let genreHtml = `<div>
+                        <h3>Number of Book in Each Genre <button style="float:right;" onclick="handleTop5Book()">Top 5 Most Expensive Books</button> </h3>
+                        <div id="genreShow">
+                            
+                        </div>    
+                      </div>`
+    interface.innerHTML = genreHtml;
+    let genreShow = document.getElementById("genreShow");
+    let size = Object.keys(genreCount).length;
+    if(size !== 0){
+        for(key in genreCount){
+            let genreHTMLdata = `<p><b>${key}:</b> ${genreCount[key]}</p>`;
+            genreShow.innerHTML += genreHTMLdata;
+        }
+    }else{
+        let genreHTMLdata = `<p><b>Self-help:</b> 0</p>
+        <p><b>Personal-finance:</b> 0</p>
+        <p><b>Business:</b> 0</p>`
+        genreShow.innerHTML = genreHTMLdata;
+    }
+}
+
+// End --> Function to Show Query In UI
