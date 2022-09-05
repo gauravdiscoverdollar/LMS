@@ -2,7 +2,6 @@
 let books = [];                         //books array 
 let deleted_books = [];                 //deleted books array
 let form ;
-const interface = document.getElementById("interface");
 
 // Start --> function for addding new book
 function addBook(book_name,book_author,price,book_id,desc,genre){
@@ -81,7 +80,11 @@ function editBook(book_id,newData){
 function listBooks(){
     if(books.length !== 0){
         sortName(books);
-        console.log("Booklist:\n",books)
+        // console.log("Book ID        Book Name                           Author          Price           Description         Genre");
+        // books.map((val,id)=>{
+        //     console.log(`${val.book_id}         ${val.book_name}                    ${val.book_author}  ${val.price}    ${val.desc}     ${val.genre}`)
+        // })
+        console.log("BookList",books);
     }else{
         console.warn("No Books in Library!")
     }
@@ -215,6 +218,7 @@ function sortPrice(arr){
 
 //Start --> function to handle with opening adding booklist
 async function openAddBook(){
+    const interface = document.getElementById("interface");
     let form = ` <h2>Add New Book</h2>
     <form id="addBookForm">
         <div>
@@ -292,6 +296,7 @@ function handleShowDeletedBookList(){
 
 //Start --> function to handle show data
 function hanleShowList(data,heading){
+    const interface = document.getElementById("interface");
     // changing ui interface to table
     interface.innerHTML= `<h3 style="text-align:center;">${heading}</h3>
                         <table>
@@ -340,6 +345,7 @@ function hanleShowList(data,heading){
 
 // Start --> function to open Edit Option In UI
 function openEditOption(){
+    const interface = document.getElementById("interface");
     interface.innerHTML = `<h3>Edit a Book</h3>
     <form id="getEditBookIdForm">
         <label>Enter the ID of Book You Want to Edit</label>
@@ -393,6 +399,7 @@ function openEditOption(){
 
 // Start --> function to show Edit Form and Handle It
 function handleEditButton(book_id){
+    const interface = document.getElementById("interface");
     book_id = parseInt(book_id)         //parsing book_id to int
     
     let index;
@@ -479,6 +486,7 @@ function handleEditButton(book_id){
 
 // Start --> function to Show Deleting Option
 function showDeleteOpts(){
+    const interface = document.getElementById("interface");
     interface.innerHTML = `<h3>Delete a Book</h3>
     <form id="getDeleteBookIdForm">
         <label>Enter the ID of Book You Want to Delete</label>
@@ -529,6 +537,7 @@ function showDeleteOpts(){
 
 // Start --> Function to handle Delete Functionality from UI
 function handleDeleteButton(book_id){
+    const interface = document.getElementById("interface");
     book_id = parseInt(book_id);
     let index;
     books.map((val,id)=>{
@@ -559,6 +568,7 @@ function handleDeleteButton(book_id){
 
 // Start --> Function to Show Query In UI
 function showQuery(){
+    const interface = document.getElementById("interface");
     let html = ` <div style="text-align:center;">
                     <button onclick="handleTop5Book()">Top 5 Most Expensive Books</button>
                     <button onclick="handleNumberOfBookInEachGenre()">Number of books in each Genre</button>
@@ -569,6 +579,7 @@ function showQuery(){
 
 // function to handel top5 price books in library
 function handleTop5Book(){
+    const interface = document.getElementById("interface");
     let top5 = [];
     let i = 0;
 
@@ -591,6 +602,7 @@ function handleTop5Book(){
 
 // function to handle genre in each 
 function handleNumberOfBookInEachGenre(){
+    const interface = document.getElementById("interface");
     const genreCount = books.reduce((acc,curr)=>{
         if(acc[curr.genre] !== undefined){
          acc[curr.genre] = ++acc[curr.genre]
@@ -620,5 +632,141 @@ function handleNumberOfBookInEachGenre(){
         genreShow.innerHTML = genreHTMLdata;
     }
 }
-
 // End --> Function to Show Query In UI
+ 
+// function to get index of bookid
+function getIdOfBookID(book_id){
+     // getting index of book_id if available
+     let index;
+     books.map((val,id)=>{
+         if(val.book_id === book_id){
+             index = id;
+         }
+     })
+     return index;
+}
+
+
+
+// For running on terminal
+const readline = require('readline');
+
+const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const prompt = (query) => new Promise((resolve) => rl.question(query, resolve));
+
+//usage inside aync function do not need closure demo only*
+(async () => {
+  try{
+   
+    let run;
+    do{
+      if(run==1){       //adding new book
+        let book_name = await prompt("Enter Book Name :   ");
+        let book_author = await prompt("Enter Book Author :   ");
+        let book_id = await prompt("Enter Book ID :   ");
+        let price = await prompt("Enter Book Price :   ");
+        let desc = await prompt("Enter Book Description :   ");
+        let genre = await prompt("Enter Book Genre :   ");
+        addBook(book_name,book_author,price,book_id,desc,genre);
+      }
+      if(run==2){       //editing book according to id
+        let book_id = await prompt("Enter Book ID :   ");
+         // getting index of book_id if available
+        let index = getIdOfBookID(book_id);
+        if(index !== undefined){
+            let book = books[index];
+
+
+            let book_name = await prompt(`Your Book Name ${book.book_name} New Book Name: `);
+            let book_author = await prompt(`You Book Author ${book.book_author} New Book Author:`);
+            let price = await prompt(`You Book Price ${book.price}  New Book Price: `);
+            let desc = await prompt(`You Book Description ${book.desc} New Book Description: `);
+            let genre = await prompt(`You Book Genre ${book.genre} New Book Genre: `);
+            
+            let editObj = {
+                book_name,book_author,price,desc,genre
+            }
+            editBook(book_id,editObj);
+        }else{
+            console.log(`Book with Book Id ${book_id} is not is Library`);
+        }
+      }
+      if(run==3){       //list book
+        listBooks();
+      }
+      if(run==4){           //search book
+        let book_id = await prompt("Enter Book ID to Search:   ");
+        let index = getIdOfBookID(book_id);
+        if(index !== undefined){
+            console.log("Searched Book",books[index]);
+        }else{
+            console.warn(`Book with Book Id ${book_id} is not is Library`);
+        }
+      }             
+      if(run==5){                   //delete book according to id
+        let book_id = await prompt("Enter Book ID to Delete:   ");
+        deleteBook(book_id);
+      }
+      if(run==6){                   //deleted booklist
+        deletedListBook()
+      }
+      if(run==7){                   //for query
+        if(books.length === 0){
+            console.warn("There is no book in Library. Please add few books to perform Query!")
+        }else{
+            let q = await prompt("Predetermined Queries:\n1. Get the top 5 most expensive books that are present in the library.\n2. Number of books in each Genre.\nEnter Option 1 or 2 or 0 for Exit");
+            if(q==1){
+                let top5 = [];
+                let i = 0;
+                books.map((val,id)=>{
+                    if(i<5){
+                        top5.push(val);
+                        i++;   
+                    }else{
+                        sortPrice(top5);
+                        if(val.price > top5[0].price){
+                            top5[0] = val;
+                        }
+                    }
+                })
+                console.log('List of Top 5 Most Expensive Books',sortName(top5));
+            
+            }else if(q==2){  
+                const genreCount = books.reduce((acc,curr)=>{
+                if(acc[curr.genre] !== undefined){
+                    acc[curr.genre] = ++acc[curr.genre]
+                }else{
+                    acc[curr.genre] = 1;
+                }
+                return acc;
+                },{})
+                console.log("Number of books in each Genre:",genreCount);
+            }else{
+                if(q!=0){
+                    console.warn('Please Enter Appropriate Option');
+                    query();
+                }else{
+                    console.warn(`You Close the Query!`)
+                }
+            }
+        }
+      }
+      console.log("Perform Operation")
+      console.log("1. Add a new book.");
+      console.log("2. Edit the details of a particular book.")
+      console.log("3. List all the books that are available in the system.")
+      console.log("4. Search for a book.")
+      console.log("5. Delete a Particular book.")
+      console.log("6. List all the books that are deleted.")
+      console.log("7. Query the books.")
+      console.log("Press 0 to Exit ")
+      run = await prompt("Select Option in 0,1,2...,7 = ")
+    }while(run!='0')
+    rl.close()
+  }catch(e){
+    console.errror("unable to prompt",e)
+}
+})()
+   
+//when done reading prompt exit program 
+rl.on('close', () => process.exit(0))
