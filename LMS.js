@@ -3,7 +3,7 @@ let books = [];                         //books array
 let deleted_books = [];                 //deleted books array
 
 
-// function for addding new book
+// Start --> function for addding new book
 function addBook(book_name,book_author,price,book_id,desc,genre){
 
     // checking all the book data is filled or not
@@ -31,9 +31,12 @@ function addBook(book_name,book_author,price,book_id,desc,genre){
         console.log("Please Enter Data in Manner with Data- \n 'this.addBook(book_name,book_author,price,book_id,desc,genre)' ")
     }
 }
+// End --> function for addding new book
 
 
-// function to edit existing books with new data
+
+
+//Start --> function to edit existing books with new data
 function editBook(book_id,newData){
     
     // getting index of book_id if available
@@ -61,28 +64,47 @@ function editBook(book_id,newData){
                 console.log(`Please Edit Again ${key} With Proper Key Value`);
             }
         }
+        console.log("Book is Successfully Edited");
         
         
     }else{                                  //sending warning if book_id is not found in current booklist
         console.error(`Sorry! Book with book_id: ${book_id} is not Present in Book List`);
         console.log('Please do listBooks() to Get Booklist IDs')
     }
-
 }
+//End --> function to edit existing books with new data
 
 
-// function to display current booklist
+
+//Start --> function to display current booklist
 function listBooks(){
-    sortName(books);
-    console.log("Booklist:\n",books)
+    if(books.length !== 0){
+        sortName(books);
+        console.log("Booklist:\n",books)
+    }else{
+        console.warn("No Books in Library!")
+    }
+   
 }
+//End --> function to display current booklist
 
-// function to display deleted booklist
+
+
+
+//Start --> function to display deleted booklist
 function deletedListBook(){
-    console.log("Deleted Booklist:\n",deleted_books);
+    if(deleted_books.length !== 0){
+        console.log("Deleted Booklist:\n",deleted_books);
+    }else{
+        console.warn("No Books is yet Deleted!")
+    }
 }
+//End --> function to display deleted booklist
 
-// function to search book with the book_id
+
+
+
+//Start --> function to search book with the book_id
 function searchBook(book_id){
     // finding book
     let book = books.filter((val,id)=>{
@@ -98,9 +120,10 @@ function searchBook(book_id){
         console.log(`Book Found --> see Details\n `,book[0])
     }
 }
+//End --> function to search book with the book_id
 
 
-// function to delete a particular book
+//Start --> function to delete a particular book
 function deleteBook(book_id){
     // getting index of book_id if available
     let index;
@@ -118,15 +141,20 @@ function deleteBook(book_id){
 
         console.log("Book Deleted Successfully");
     }else{
-        console.warn(`Book with book_id: ${book_id} for deleting not found`);
+        console.warn(`Book with book_id: ${book_id} for deleting not found in Library`);
     }
-  
 }
+//End --> function to delete a particular book
 
 
 
-// function to query books
+
+//Start --> function to query books
 function query(){
+    if(books.length === 0){
+        console.warn("There is no book in Library. Please add few books to perform Query!")
+        return;
+    }
     let q = prompt("Predetermined Queries:\n1. Get the top 5 most expensive books that are present in the library.\n2. Number of books in each Genre.\nEnter Option 1 or 2 or 0 for Exit");
     if(q==1){
         let top5 = [];
@@ -163,17 +191,21 @@ function query(){
         }
     }
 }
+//End --> function to query books
 
 
-// function to sort array according to name in ascending order
+//Start --> function to sort array according to name in ascending order
 function sortName(arr){
     return arr.sort((a, b) => a.book_name.localeCompare(b.book_name))
 }
+//End --> function to sort array according to name in ascending order
 
-// function to sort array according to price in ascending order
+
+//Start --> function to sort array according to price in ascending order
 function sortPrice(arr){
     return arr.sort((a, b) => a.price - b.price)
 }
+//End --> function to sort array according to price in ascending order
 
 
 
