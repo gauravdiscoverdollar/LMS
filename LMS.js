@@ -262,3 +262,67 @@ async function openAddBook(){
 }
 //End --> function to handle with opening adding booklist
  
+
+// Start --> function to handle Showing Booklist in UI
+function handleShowBookList(){
+    sortName(books);
+    hanleShowList(books);   
+}
+// End --> function to handle Showing Booklist in UI
+
+
+
+// Start --> function to handle Showing Deleted Booklist in UI
+function handleShowBookList(){
+    sortName(deleted_books);
+    hanleShowList(deleted_books);   
+}
+// End --> function to handle Showing Deleted Booklist in UI
+
+
+
+
+
+
+
+
+// function to handle show data
+function hanleShowList(data){
+    interface.innerHTML= `<table>
+                            <thead>
+                                <tr>
+                                    <th>Book_ID</th>
+                                    <th>Name</th>
+                                    <th>Author</th>
+                                    <th>Price</th>
+                                    <th>Description</th>
+                                    <th>Genre</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            
+                            </tbody>
+                        </table>`
+    let tbody = document.getElementById('tbody');
+    if(data.length !== 0){
+        data.map((val,key)=>{
+            let tr = ` <tr>
+                            <td>${val.book_id}</td>
+                            <td>${val.book_name}</td>
+                            <td>${val.book_author}</td>
+                            <td>${val.price}</td>
+                            <td>${val.desc}</td>
+                            <td>${val.genre}</td>
+                        </tr>`;
+        tbody.innerHTML += tr;
+        })
+    }else{
+        let tr = ` <tr>
+                        <td colspan="6">No Data</td>
+                    </tr>`
+        tbody.innerHTML = tr;
+    }
+}
+
+
+
