@@ -30,6 +30,7 @@
        border:1px solid black;
     }
     table{
+        margin-top: 20px;
         width: 100%;
         text-align: center;
     }
@@ -38,15 +39,14 @@
     <h1>Library Management System </h1>
     <div>
         <button onclick="openAddBook()">Add Book</button>
-        <button>Edit Book</button>
-        <button>Delete Book</button>
+        <button onclick="openEditOption()">Edit Book</button>
+        <button onclick="showDeleteOpts()">Delete Book</button>
         <button>Book Querry</button>
         <button onclick="handleShowBookList()">Book List</button>
-        <button onclick="handleShowBookList()">Deleted BookList</button>
+        <button onclick="handleShowDeletedBookList()">Deleted BookList</button>
     </div>
     <div id="interface" style="text-align: left;margin: 0 5%;margin-top: 50px;">
-      
-
+        
     </div>
    
     <script src="./LMS.js"></script>

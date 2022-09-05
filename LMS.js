@@ -269,7 +269,7 @@ async function openAddBook(){
 // Start --> function to handle Showing Booklist in UI
 function handleShowBookList(){
     sortName(books);
-    hanleShowList(books);   
+    hanleShowList(books,"BookList");   
     // console.log("Book")
 }
 // End --> function to handle Showing Booklist in UI
@@ -279,7 +279,7 @@ function handleShowBookList(){
 // Start --> function to handle Showing Deleted Booklist in UI
 function handleShowDeletedBookList(){
     sortName(deleted_books);
-    hanleShowList(deleted_books);   
+    hanleShowList(deleted_books,"Deleted BookList");   
 }
 // End --> function to handle Showing Deleted Booklist in UI
 
@@ -291,9 +291,10 @@ function handleShowDeletedBookList(){
 
 
 //Start --> function to handle show data
-function hanleShowList(data){
+function hanleShowList(data,heading){
     // changing ui interface to table
-    interface.innerHTML= `<table>
+    interface.innerHTML= `<h3 style="text-align:center;">${heading}</h3>
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Book_ID</th>
@@ -457,7 +458,8 @@ function handleEditButton(book_id){
             interface.innerHTML = "<h3>Book Edit Successfull</h3>";
             setTimeout(()=>{
                 interface.innerHTML = '';
-            },1500)
+                openEditOption();
+            },1000)
         });
 
     }else{                      //if index not found of book_id
@@ -465,10 +467,88 @@ function handleEditButton(book_id){
         interface.innerHTML = showMessage;
         setTimeout(()=>{
             interface.innerHTML = '';
-        },1500)
+            openEditOption();
+        },1000)
     }
 }
 // End --> function to show Edit Form and Handle It
 
 
 
+
+
+// Start --> function to Show Deleting Option
+function showDeleteOpts(){
+    interface.innerHTML = `<h3>Delete a Book</h3>
+    <form id="getDeleteBookIdForm">
+        <label>Enter the ID of Book You Want to Delete</label>
+        <input type="text" name="edit_book_id" id="edit_book_id" required style="margin-left: 50px;">
+        <button type="submit">Delete</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="d-tbody">
+        </tbody>
+    </table>`
+    let tbody = document.getElementById('d-tbody');
+    if(books.length !== 0){
+        // looping over booklist
+        books.map((val,key)=>{
+            let tr = ` <tr>
+                            <td>${val.book_id}</td>
+                            <td>${val.book_name}</td>
+                            <td><button onclick="handleDeleteButton(${val.book_id})">Delete</button></td>
+                        </tr>`;
+        // adding all book in ui
+        tbody.innerHTML += tr;
+        })
+    }else{
+        // in case no book in list
+        let tr = ` <tr>
+                        <td colspan="3">No Data</td>
+                    </tr>`
+        tbody.innerHTML = tr;
+    }
+
+
+     // adding event listner getting delete a bookid
+     document.getElementById("getDeleteBookIdForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        handleDeleteButton(event.target[0].value)
+    });
+}
+
+
+
+
+function handleDeleteButton(book_id){
+    book_id = parseInt(book_id);
+    let index;
+    books.map((val,id)=>{
+        if(val.book_id === book_id){
+            index = id;
+        }
+    });
+    if(index!==undefined){
+        deleteBook(book_id);
+        let showMessage = `<h3 style="color:blue;">Book With ${book_id} Successfully Deleted</h3>`;
+        interface.innerHTML = showMessage;
+        setTimeout(()=>{
+            interface.innerHTML = '';
+            showDeleteOpts()
+        },1500) 
+    }else{
+        let showMessage = `<h3 style="color:red;">Book With ${book_id} not Found in Library</h3>`;
+        interface.innerHTML = showMessage;
+        setTimeout(()=>{
+            interface.innerHTML = '';
+            showDeleteOpts()
+        },1000) 
+    }
+}
