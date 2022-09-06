@@ -35,6 +35,31 @@ function addBook(bookName,bookAuthor,price,bookId,desc,genre){
 
 
 
+// add books
+function addBooksHandleError (book){
+    try {
+        let keys = {"bookName":false,"bookAuthor":false,"price":false,"bookId":false,"desc":false,"genre":false};
+        let missedKeys = [];
+        for(let key in book){
+            keys[key] = true;
+        }
+        for(let key in keys){
+            if(keys[key]==false){
+                missedKeys.push(key);
+            }
+        }
+        if(missedKeys.length !==0 ){
+            console.log("You did not add following data in book. Please Add",missedKeys);
+        }else{
+            books.push(book);
+            console.log("Books Added Successfully");
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 //Start --> function to edit existing books with new data
 function editBook(bookId,newData){
@@ -240,11 +265,12 @@ function handleGenreCount(){
 //Start --> function to handle with opening adding booklist
 async function openAddBook(){
     const interface = document.getElementById("interface");
+    const book_id = 10101 + books.length + deleted_books.length;
     let form = ` <h2>Add New Book</h2>
     <form id="addBookForm">
         <div>
             <label>Book ID : </label>
-            <input type="number" name="bookId" id="add_bookId" required/>
+            <input type="number" name="bookId" id="add_bookId" value="${book_id}" readonly required/>
         </div>
         <div>
             <label>Book Name : </label>
